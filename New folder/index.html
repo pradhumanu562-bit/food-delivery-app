@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FeastFlow - Ultra-Fast Food Delivery | Gourmet Meals Delivered in 25 Mins</title>
+  <meta name="description" content="Order your favorite gourmet burgers, wood-fired artisan pizza, fresh sushi, and healthy bowls delivered hot to your doorstep in under 30 minutes.">
+  <meta name="keywords" content="food delivery, gourmet burgers, artisan pizza, sushi delivery, healthy bowls, order food online">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       Navigation Bar
+       ========================================================================== -->
+  <header class="navbar" id="mainNavbar">
+    <div class="container nav-container">
+      <!-- Brand Logo -->
+      <a href="#" class="nav-brand" id="brandLogo">
+        <div class="brand-icon">⚡</div>
+        <span>Feast<span class="brand-accent">Flow</span></span>
+      </a>
+
+      <!-- Current Delivery Location Selector -->
+      <div class="location-pill" id="locationSelector" title="Click to change your delivery address">
+        <span class="location-icon">📍</span>
+        <span class="location-text" id="currentLocationText">742 Evergreen Terrace, Downtown</span>
+        <span style="font-size: 0.75rem; color: var(--text-muted);">▾</span>
+      </div>
+
+      <!-- Action Items -->
+      <div class="nav-actions">
+        <!-- Live Tracker Quick Access Button -->
+        <button class="icon-btn" onclick="openLiveTrackerModal()" title="Track Active Order" aria-label="Order Tracker">
+          <span>🛵</span>
+        </button>
+
+        <!-- Wishlist / Favorites -->
+        <button class="icon-btn" onclick="showToast('Your saved favorite dishes are marked with ❤️', 'info')" title="Favorites" aria-label="Favorites">
+          <span>❤️</span>
+          <span class="badge-count" id="navFavCount">0</span>
+        </button>
+
+        <!-- Theme Toggle (Dark / Light) -->
+        <button class="icon-btn" id="themeToggleBtn" title="Toggle Theme" aria-label="Toggle Theme">
+          <span>☀️</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button class="cart-btn-expand" id="navCartBtn" aria-label="Open Shopping Cart">
+          <span>🛒</span>
+          <span id="navCartCount">0</span>
+          <span class="cart-pill-price" id="navCartPrice">$0.00</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       Hero Section
+       ========================================================================== -->
+  <section class="hero-section">
+    <div class="hero-glow-bg"></div>
+    <div class="container hero-grid">
+      <!-- Left Hero Content -->
+      <div class="hero-content">
+        <div class="hero-badge-pill">
+          <span>🔥</span> Over 50,000+ Happy Foodies Served
+        </div>
+
+        <h1 class="hero-title">
+          Craving Deliciousness? <br>
+          <span class="gradient-text">Delivered In 25 Mins.</span>
+        </h1>
+
+        <p class="hero-description">
+          Experience gourmet culinary creations from Michelin-quality chefs and top local kitchens delivered piping hot directly to your doorstep.
+        </p>
+
+        <!-- Hero Address / Quick Search Input -->
+        <div class="hero-search-wrapper">
+          <span style="font-size: 1.25rem; margin-right: 0.5rem;">🔍</span>
+          <input type="text" id="heroSearchInput" placeholder="Search burger, pizza, sushi, or cuisine..." autocomplete="off">
+          <button class="hero-search-btn" onclick="document.getElementById('menuSection').scrollIntoView({behavior: 'smooth'})">
+            <span>Find Food</span>
+            <span>➔</span>
+          </button>
+        </div>
+
+        <!-- Social Proof Stats -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">25 min</span>
+            <span class="stat-label">Average Delivery</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">4.9 ★</span>
+            <span class="stat-label">25k+ Reviews</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Fresh & Hygienic</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Hero Visual Showcase -->
+      <div class="hero-visual-wrapper">
+        <!-- Floating ETA Badge -->
+        <div class="floating-badge floating-eta">
+          <div class="badge-icon-box">⏱️</div>
+          <div>
+            <div class="badge-text-primary">Superfast Dispatch</div>
+            <div class="badge-text-secondary">Arriving in ~20 mins</div>
+          </div>
+        </div>
+
+        <!-- Main Spotlight Card -->
+        <div class="hero-main-card">
+          <img src="images/hero_burger.jpg" alt="Chef's Truffle Double Smash Burger">
+          <div class="hero-card-overlay">
+            <div>
+              <div class="hero-overlay-tag">🔥 Today's Bestseller</div>
+              <div class="hero-overlay-title">Truffle Smash Burger</div>
+            </div>
+            <button class="add-cart-btn" onclick="addToCart('dish-1')" style="background: var(--primary); color: white;">
+              <span>+ $14.99</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Floating Rating Badge -->
+        <div class="floating-badge floating-rating">
+          <div class="badge-icon-box" style="background: rgba(16, 185, 129, 0.15); color: var(--success);">★</div>
+          <div>
+            <div class="badge-text-primary">4.9 Star Rating</div>
+            <div class="badge-text-secondary">From 2,400+ orders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Deals & Promo Offers Section
+       ========================================================================== -->
+  <section class="promo-section">
+    <div class="container promo-grid">
+      <!-- Promo 1 -->
+      <div class="promo-banner banner-fire">
+        <div>
+          <div class="promo-tag">Limited Time Deal</div>
+          <h3 class="promo-title">Get 30% OFF Your Order</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Apply discount on all artisan burgers & combos</p>
+          <div class="promo-code-box" onclick="quickApplyCoupon('FEAST30')" title="Click to apply coupon">
+            <span>CODE: FEAST30</span> <span>📋</span>
+          </div>
+        </div>
+        <div class="promo-emoji">🍔</div>
+      </div>
+
+      <!-- Promo 2 -->
+      <div class="promo-banner banner-emerald">
+        <div>
+          <div class="promo-tag" style="color: var(--success);">Free Delivery</div>
+          <h3 class="promo-title">Zero Delivery Fees</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">On all artisan orders above $25</p>
+          <div class="promo-code-box" onclick="quickApplyCoupon('FREEDEL')" title="Click to apply coupon">
+            <span>CODE: FREEDEL</span> <span>🚚</span>
+          </div>
+        </div>
+        <div class="promo-emoji">🍕</div>
+      </div>
+
+      <!-- Promo 3 -->
+      <div class="promo-banner banner-amber">
+        <div>
+          <div class="promo-tag" style="color: var(--secondary);">First Time Customer</div>
+          <h3 class="promo-title">Save Flat $10 Now</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Valid on your premier feast experience</p>
+          <div class="promo-code-box" onclick="quickApplyCoupon('BITE10')" title="Click to apply coupon">
+            <span>CODE: BITE10</span> <span>🎁</span>
+          </div>
+        </div>
+        <div class="promo-emoji">🍣</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Categories Section
+       ========================================================================== -->
+  <section class="categories-section" id="categoriesSection">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <span class="section-subtitle">Explore Cuisines</span>
+          <h2 class="section-title">Popular Categories</h2>
+        </div>
+      </div>
+
+      <div class="category-scroll-container" id="categoriesList">
+        <div class="category-card active" data-category="all">
+          <div class="category-icon">🍽️</div>
+          <span class="category-name">All Items</span>
+        </div>
+        <div class="category-card" data-category="burgers">
+          <div class="category-icon">🍔</div>
+          <span class="category-name">Burgers</span>
+        </div>
+        <div class="category-card" data-category="pizza">
+          <div class="category-icon">🍕</div>
+          <span class="category-name">Pizza</span>
+        </div>
+        <div class="category-card" data-category="asian">
+          <div class="category-icon">🍣</div>
+          <span class="category-name">Sushi & Asian</span>
+        </div>
+        <div class="category-card" data-category="bowls">
+          <div class="category-icon">🥗</div>
+          <span class="category-name">Healthy Bowls</span>
+        </div>
+        <div class="category-card" data-category="dessert">
+          <div class="category-icon">🍰</div>
+          <span class="category-name">Desserts</span>
+        </div>
+        <div class="category-card" data-category="drinks">
+          <div class="category-icon">🍹</div>
+          <span class="category-name">Drinks</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Menu Section & Filtering Toolbar
+       ========================================================================== -->
+  <section class="menu-section" id="menuSection">
+    <div class="container">
+      <!-- Toolbar -->
+      <div class="filters-toolbar">
+        <!-- Dietary Filter Pills -->
+        <div class="dietary-pills">
+          <button class="filter-pill diet-pill active" data-diet="all">All Diets</button>
+          <button class="filter-pill diet-pill" data-diet="veg">🌱 Pure Veg</button>
+          <button class="filter-pill diet-pill" data-diet="non-veg">🥩 Non-Veg</button>
+        </div>
+
+        <!-- Search & Sort Controls -->
+        <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
+          <div style="position: relative; display: flex; align-items: center;">
+            <input type="text" id="menuSearchInput" placeholder="Filter dishes..." class="form-control" style="padding-left: 2rem; width: 190px; border-radius: var(--radius-full); font-size: 0.88rem;">
+            <span style="position: absolute; left: 0.75rem; color: var(--text-muted); font-size: 0.85rem;">🔍</span>
+          </div>
+
+          <div class="sort-wrapper">
+            <select class="sort-select" id="sortSelect" aria-label="Sort dishes">
+              <option value="popular">🔥 Most Popular</option>
+              <option value="rating">★ Highest Rated</option>
+              <option value="price-low">💵 Price: Low to High</option>
+              <option value="price-high">💎 Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dynamic Food Grid -->
+      <div class="menu-grid" id="dishesGrid">
+        <!-- Rendered dynamically by script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Why Choose Us / Features Section
+       ========================================================================== -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header" style="text-align: center; justify-content: center; flex-direction: column;">
+        <span class="section-subtitle">The FeastFlow Advantage</span>
+        <h2 class="section-title">Why Foodies Choose Us</h2>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-box">⚡</div>
+          <h3 class="feature-title">25-Min Superfast</h3>
+          <p class="feature-desc">Our intelligent routing matches orders with the closest kitchen and dedicated express couriers.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🌿</div>
+          <h3 class="feature-title">Artisan Ingredients</h3>
+          <p class="feature-desc">100% farm-to-table organic produce, premium grade meats, and scratch-made dressings daily.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">📍</div>
+          <h3 class="feature-title">Live GPS Tracking</h3>
+          <p class="feature-desc">Follow your order in real-time from the chef's pan to your front door with live status updates.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon-box">🛡️</div>
+          <h3 class="feature-title">Sealed & Hygienic</h3>
+          <p class="feature-desc">Tamper-proof thermal insulated packaging ensures your meal arrives fresh, piping hot, and pristine.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       Footer
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand Info -->
+        <div class="footer-brand">
+          <div class="nav-brand">
+            <div class="brand-icon">⚡</div>
+            <span>Feast<span class="brand-accent">Flow</span></span>
+          </div>
+          <p>Delivering gourmet culinary excellence straight to your home or office with lightning speed and premium care.</p>
+          <div class="footer-social-links">
+            <a href="#" class="social-link" aria-label="Instagram">📸</a>
+            <a href="#" class="social-link" aria-label="Twitter">🐦</a>
+            <a href="#" class="social-link" aria-label="Facebook">📘</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <div class="footer-links">
+            <a href="#mainNavbar">Home</a>
+            <a href="#categoriesSection">Cuisines</a>
+            <a href="#menuSection">Trending Dishes</a>
+            <a href="javascript:void(0)" onclick="openLiveTrackerModal()">Track My Order</a>
+          </div>
+        </div>
+
+        <!-- Legal & Info -->
+        <div>
+          <h4 class="footer-col-title">Company</h4>
+          <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Partner With Us</a>
+            <a href="#">Courier Riders</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+        </div>
+
+        <!-- Download & Hours -->
+        <div>
+          <h4 class="footer-col-title">Service Hours</h4>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">Mon - Sun: 8:00 AM - 2:00 AM</p>
+          <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.25rem;">24/7 Priority Support available</p>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="filter-pill" style="border-radius: var(--radius-sm);">📱 App Store</button>
+            <button class="filter-pill" style="border-radius: var(--radius-sm);">🤖 Google Play</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 FeastFlow Inc. All rights reserved. Crafted with passion for foodies.</div>
+        <div style="display: flex; gap: 1rem;">
+          <span>🔒 256-Bit SSL Encrypted</span>
+          <span>💳 Verified Payments</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       Slide-out Cart Drawer
+       ========================================================================== -->
+  <div class="cart-drawer-overlay" id="cartDrawerOverlay">
+    <div class="cart-drawer" id="cartDrawer">
+      <!-- Drawer Header -->
+      <div class="cart-header">
+        <h3 class="cart-header-title">
+          <span>🛒 Your Order</span>
+        </h3>
+        <button class="close-btn" id="closeCartDrawerBtn" aria-label="Close Cart">✕</button>
+      </div>
+
+      <!-- Free Delivery Progress Tracker -->
+      <div class="free-shipping-bar">
+        <div class="free-shipping-text" id="freeShippingText">
+          Add <strong>$15.00</strong> more for FREE Delivery 🚚
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="freeShippingFill" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Cart Items Container -->
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Rendered by script.js -->
+      </div>
+
+      <!-- Empty State -->
+      <div class="cart-empty-state" id="cartEmptyState" style="display: none;">
+        <div class="cart-empty-icon">🍽️</div>
+        <h4 style="font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.4rem;">Your cart is hungry!</h4>
+        <p style="font-size: 0.88rem; margin-bottom: 1.25rem;">Explore our menu and add your favorite dishes.</p>
+        <button class="hero-search-btn" onclick="closeCartDrawer(); document.getElementById('menuSection').scrollIntoView({behavior: 'smooth'})">
+          Browse Menu
+        </button>
+      </div>
+
+      <!-- Cart Calculation & Checkout Footer -->
+      <div class="cart-footer" id="cartFooter">
+        <!-- Coupon Input -->
+        <div class="coupon-input-box">
+          <input type="text" id="couponCodeInput" placeholder="Promo code (e.g. FEAST30)">
+          <button class="coupon-apply-btn" onclick="applyCouponCode()">Apply</button>
+        </div>
+
+        <div class="calc-row">
+          <span>Subtotal</span>
+          <span id="cartSubtotal">$0.00</span>
+        </div>
+        <div class="calc-row">
+          <span>Estimated Delivery</span>
+          <span id="cartDeliveryFee">$3.99</span>
+        </div>
+        <div class="calc-row">
+          <span>Estimated Tax (8%)</span>
+          <span id="cartTax">$0.00</span>
+        </div>
+        <div class="calc-row" id="cartDiscountRow" style="display: none; color: var(--success); font-weight: 700;">
+          <span>Coupon Discount</span>
+          <span id="cartDiscountVal">-$0.00</span>
+        </div>
+        <div class="calc-row total-row">
+          <span>Total Amount</span>
+          <span id="cartGrandTotal">$0.00</span>
+        </div>
+
+        <button class="checkout-btn" id="checkoutProceedBtn" onclick="openCheckoutModal()">
+          <span>Proceed to Checkout</span>
+          <span>➔</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Dish Quick-View / Customization Modal
+       ========================================================================== -->
+  <div class="modal-overlay" id="dishDetailModal">
+    <div class="modal-container">
+      <button class="modal-close-corner" onclick="closeDishModal()" aria-label="Close Modal">✕</button>
+      <img src="images/hero_burger.jpg" alt="Dish Preview" class="modal-dish-img" id="modalDishImage">
+
+      <div class="modal-dish-body">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+          <h3 style="font-family: var(--font-display); font-size: 1.45rem; font-weight: 800;" id="modalDishTitle">Dish Name</h3>
+          <span style="font-family: var(--font-display); font-size: 1.45rem; font-weight: 800; color: var(--primary);" id="modalDishPrice">$0.00</span>
+        </div>
+
+        <div style="display: flex; gap: 1rem; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+          <span id="modalDishRating" style="font-weight: 700; color: var(--text-main);">★ 4.9</span>
+          <span>🔥 <span id="modalDishCalories">650 kcal</span></span>
+          <span>⏱️ <span id="modalDishTime">20 min</span></span>
+        </div>
+
+        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6;" id="modalDishDesc">Dish detailed description goes here.</p>
+
+        <!-- Customization: Spice Level -->
+        <div class="customization-group">
+          <div class="customization-title">
+            <span>Select Spice Level</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Required</span>
+          </div>
+          <div class="spice-options">
+            <div class="spice-radio-btn" data-spice="Mild">Mild 🟢</div>
+            <div class="spice-radio-btn selected" data-spice="Medium">Medium 🟡</div>
+            <div class="spice-radio-btn" data-spice="Hot">Hot 🌶️</div>
+            <div class="spice-radio-btn" data-spice="Extra Fire">Extra Fire 🔥</div>
+          </div>
+        </div>
+
+        <!-- Customization: Add-ons -->
+        <div class="customization-group">
+          <div class="customization-title">
+            <span>Add-ons & Extras</span>
+            <span style="font-size: 0.8rem; color: var(--text-muted);">Optional</span>
+          </div>
+          <label class="addon-checkbox-row">
+            <div>
+              <input type="checkbox" class="addon-checkbox" value="Extra Cheddar">
+              <span>Extra Melted Cheddar</span>
+            </div>
+            <span style="color: var(--primary); font-weight: 700;">+$1.50</span>
+          </label>
+          <label class="addon-checkbox-row">
+            <div>
+              <input type="checkbox" class="addon-checkbox" value="Crispy Bacon">
+              <span>Smoked Crispy Bacon</span>
+            </div>
+            <span style="color: var(--primary); font-weight: 700;">+$2.25</span>
+          </label>
+          <label class="addon-checkbox-row">
+            <div>
+              <input type="checkbox" class="addon-checkbox" value="Truffle Dip">
+              <span>House Truffle Aioli Dip</span>
+            </div>
+            <span style="color: var(--primary); font-weight: 700;">+$1.25</span>
+          </label>
+        </div>
+
+        <button class="checkout-btn" style="margin-top: 1.5rem;" onclick="addCustomDishFromModal()">
+          <span>Add Customized Dish to Cart</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Interactive Checkout Modal
+       ========================================================================== -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-container">
+      <button class="modal-close-corner" onclick="closeCheckoutModal()" aria-label="Close Checkout">✕</button>
+      
+      <div class="checkout-modal-body">
+        <h3 class="checkout-title">Express Checkout</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.5rem;">Enter your delivery coordinates and complete payment.</p>
+
+        <form id="checkoutForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="orderCustName">Full Name</label>
+              <input type="text" id="orderCustName" class="form-control" placeholder="Alex Morgan" required value="Alex Morgan">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="orderCustPhone">Phone Number</label>
+              <input type="tel" id="orderCustPhone" class="form-control" placeholder="+1 (555) 019-2834" required value="+1 (555) 019-2834">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="orderCustAddress">Delivery Address</label>
+            <input type="text" id="orderCustAddress" class="form-control" placeholder="Apt 4B, 742 Evergreen Terrace, Downtown" required value="Apt 4B, 742 Evergreen Terrace, Downtown">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="orderCustNotes">Delivery Instructions (Optional)</label>
+            <input type="text" id="orderCustNotes" class="form-control" placeholder="e.g. Ring the doorbell, leave at front porch">
+          </div>
+
+          <!-- Payment Method -->
+          <div class="form-group">
+            <label class="form-label">Payment Method</label>
+            <div class="payment-method-selector">
+              <div class="payment-card-opt selected" data-payment="Credit Card">
+                <span>💳</span>
+                <span>Credit Card</span>
+              </div>
+              <div class="payment-card-opt" data-payment="Apple/GPay">
+                <span>📱</span>
+                <span>Apple / GPay</span>
+              </div>
+              <div class="payment-card-opt" data-payment="Cash on Delivery">
+                <span>💵</span>
+                <span>Cash on Delivery</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="checkout-btn" style="margin-top: 1.5rem;">
+            <span>Confirm & Place Order 🚀</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       Live Order Tracking Modal
+       ========================================================================== -->
+  <div class="modal-overlay" id="trackerModal">
+    <div class="modal-container">
+      <button class="modal-close-corner" onclick="closeLiveTrackerModal()" aria-label="Close Tracker">✕</button>
+
+      <div class="tracker-modal-body">
+        <div class="tracker-header-badge">
+          <span>●</span> LIVE ORDER DISPATCH
+        </div>
+
+        <h3 class="tracker-title" id="trackerOrderId">Order #FF-849201</h3>
+        <p style="font-size: 0.88rem; color: var(--text-secondary);">Delivering to <strong id="trackerAddressDisplay" style="color: var(--text-main);">Downtown</strong></p>
+
+        <!-- ETA Display Box -->
+        <div class="tracker-eta-box">
+          <div class="tracker-eta-num" id="trackerEtaDisplay">24 mins</div>
+          <div class="tracker-eta-label">Estimated Delivery Time</div>
+        </div>
+
+        <!-- 4-Stage Stepper -->
+        <div class="tracker-stepper">
+          <div class="tracker-progress-line" id="trackerProgressLine"></div>
+
+          <div class="step-node completed" id="step-1">
+            <div class="step-circle">✅</div>
+            <span class="step-title">Confirmed</span>
+          </div>
+
+          <div class="step-node active" id="step-2">
+            <div class="step-circle">👨‍🍳</div>
+            <span class="step-title">Preparing</span>
+          </div>
+
+          <div class="step-node" id="step-3">
+            <div class="step-circle">🛵</div>
+            <span class="step-title">On Route</span>
+          </div>
+
+          <div class="step-node" id="step-4">
+            <div class="step-circle">📦</div>
+            <span class="step-title">Delivered</span>
+          </div>
+        </div>
+
+        <!-- Courier Rider Card -->
+        <div class="rider-card">
+          <div class="rider-info">
+            <div class="rider-avatar">🛵</div>
+            <div>
+              <div class="rider-name">Marcus Vance <span style="font-size: 0.8rem; color: #ffb703;">★ 4.9</span></div>
+              <div class="rider-vehicle">Honda Hornet 160R • Red (Lic: 4FD-92)</div>
+            </div>
+          </div>
+          <div class="rider-contact-btns">
+            <button class="icon-btn" onclick="showToast('Calling Marcus (+1-555-0199)...', 'info')" title="Call Courier">📞</button>
+            <button class="icon-btn" onclick="showToast('Message sent to courier: On my way down!', 'info')" title="Chat with Courier">💬</button>
+          </div>
+        </div>
+
+        <!-- Simulation Control Button -->
+        <button class="simulate-btn" onclick="advanceOrderStage()">
+          Simulate Next Stage ➔
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Core JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
